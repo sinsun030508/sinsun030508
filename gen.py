@@ -1,7 +1,7 @@
 """dark_mode.svg / light_mode.svg 생성기.
 
-GITHUB_TOKEN(또는 ACCESS_TOKEN) 환경변수가 있으면 GitHub API로 통계를 받아와 채우고,
-없으면 통계 칸을 "-"로 표시한다. GitHub Actions(.github/workflows/update.yml)가 매일 실행한다.
+GITHUB_TOKEN(또는 ACCESS_TOKEN) 환경변수가 있으면 GraphQL API로 전체 통계를 채우고,
+없으면 공개 REST API로 Repos/Stars/Commits/Followers 를 채운다(Lines of Code 는 토큰 필요). GitHub Actions(.github/workflows/update.yml)가 매일 실행한다.
 """
 import json
 import os
@@ -157,6 +157,36 @@ def fetch_stats():
     }
 
 
+def rest(url):
+    """토큰이 없어도 동작하는 공개 REST API 호출 (시간당 60회 제한)."""
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": "profile-gen"}
+    if TOKEN:
+        headers["Authorization"] = f"Bearer {TOKEN}"
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=30) as r:
+        return json.loads(r.read())
+
+
+def fetch_stats_rest():
+    """토큰 없이 PC에서 실행할 때: 공개 데이터만으로 통계 계산 (Lines of Code 제외)."""
+    api = "https://api.github.com"
+    u = rest(f"{api}/users/{USER}")
+    repos = rest(f"{api}/users/{USER}/repos?per_page=100&type=owner")
+    s = {
+        "repos": u["public_repos"],
+        "contributed": None,
+        "stars": sum(r["stargazers_count"] for r in repos),
+        "followers": u["followers"],
+        "commits": None,
+        "loc_add": None,
+        "loc_del": None,
+    }
+    try:
+        s["commits"] = rest(f"{api}/search/commits?q=author:{USER}&per_page=1")["total_count"]
+    except Exception as e:
+        print("commits fetch failed:", e)
+    return s
+
+
 def get_stats():
     if TOKEN:
         try:
@@ -164,9 +194,18 @@ def get_stats():
             print("stats:", s)
             return s
         except Exception as e:
-            print("stats fetch failed:", e)
+            print("GraphQL stats fetch failed:", e)
     else:
-        print("GITHUB_TOKEN 없음 → 통계는 '-'로 표시")
+        print("GITHUB_TOKEN 없음 → 공개 REST API로 통계 조회")
+    try:
+        s = fetch_stats_rest()
+        print("stats (REST):", s)
+        return s
+    except Exception as e:
+        print("REST stats fetch failed:", e)
+    if os.environ.get("GITHUB_ACTIONS"):
+        # Actions 에서는 '-' 로 덮어쓰지 말고 실패로 끝내서 로그로 원인을 확인할 수 있게 한다
+        raise SystemExit("통계를 가져오지 못했습니다.")
     return None
 
 
@@ -180,17 +219,22 @@ def kv2(k1, v1, k2, v2):
 
 
 def stats_lines(s):
-    n = lambda x: f"{x:,}" if s else "-"
-    g = lambda k: s[k] if s else 0
-    repos = f"{s['repos']} {{Contributed: {s['contributed']}}}" if s else "-"
-    loc = [("t", ". "), ("k", "Lines of Code"), ("t", ": "), ("v", n(g("loc_add") - g("loc_del")))]
-    if s:
-        loc += [("d", " ( "), ("g", f"{s['loc_add']:,}++"), ("d", ", "), ("r", f"{s['loc_del']:,}--"), ("d", " )")]
+    s = s or {}
+    n = lambda k: f"{s[k]:,}" if s.get(k) is not None else "-"
+    repos = n("repos")
+    if s.get("contributed") is not None:
+        repos += f" {{Contributed: {s['contributed']}}}"
+    loc = [("t", ". "), ("k", "Lines of Code"), ("t", ": ")]
+    if s.get("loc_add") is not None:
+        loc += [("v", f"{s['loc_add'] - s['loc_del']:,}"), ("d", " ( "), ("g", f"{s['loc_add']:,}++"),
+                ("d", ", "), ("r", f"{s['loc_del']:,}--"), ("d", " )")]
+    else:
+        loc += [("v", "-")]
     return [
         [],
         sec("GitHub Stats"),
-        kv2("Repos", repos, "Stars", n(g("stars"))),
-        kv2("Commits", n(g("commits")), "Followers", n(g("followers"))),
+        kv2("Repos", repos, "Stars", n("stars")),
+        kv2("Commits", n("commits"), "Followers", n("followers")),
         loc,
     ]
 
