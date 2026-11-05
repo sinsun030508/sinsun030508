@@ -1,7 +1,7 @@
 """dark_mode.svg / light_mode.svg 생성기.
 
 GITHUB_TOKEN(또는 ACCESS_TOKEN) 환경변수가 있으면 GraphQL API로 전체 통계를 채우고,
-없으면 공개 REST API로 Repos/Stars/Commits/Followers 를 채운다(Lines of Code 는 토큰 필요). GitHub Actions(.github/workflows/update.yml)가 매일 실행한다.
+없으면 공개 REST API로 Repos/Commits 를 채운다(Lines of Code 는 토큰 필요). GitHub Actions(.github/workflows/update.yml)가 매일 실행한다.
 """
 import json
 import os
@@ -123,10 +123,9 @@ def fetch_stats():
     query {{
       user(login: "{USER}") {{
         id createdAt
-        followers {{ totalCount }}
         repositories(first: 100, ownerAffiliations: OWNER) {{
           totalCount
-          nodes {{ name stargazerCount isFork }}
+          nodes {{ name isFork }}
         }}
         repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY]) {{
           totalCount
@@ -149,8 +148,6 @@ def fetch_stats():
     return {
         "repos": u["repositories"]["totalCount"],
         "contributed": u["repositoriesContributedTo"]["totalCount"],
-        "stars": sum(n["stargazerCount"] for n in nodes),
-        "followers": u["followers"]["totalCount"],
         "commits": commits,
         "loc_add": add,
         "loc_del": rem,
@@ -170,12 +167,9 @@ def fetch_stats_rest():
     """토큰 없이 PC에서 실행할 때: 공개 데이터만으로 통계 계산 (Lines of Code 제외)."""
     api = "https://api.github.com"
     u = rest(f"{api}/users/{USER}")
-    repos = rest(f"{api}/users/{USER}/repos?per_page=100&type=owner")
     s = {
         "repos": u["public_repos"],
         "contributed": None,
-        "stars": sum(r["stargazers_count"] for r in repos),
-        "followers": u["followers"],
         "commits": None,
         "loc_add": None,
         "loc_del": None,
@@ -233,8 +227,7 @@ def stats_lines(s):
     return [
         [],
         sec("GitHub Stats"),
-        kv2("Repos", repos, "Stars", n("stars")),
-        kv2("Commits", n("commits"), "Followers", n("followers")),
+        kv2("Repos", repos, "Commits", n("commits")),
         loc,
     ]
 
