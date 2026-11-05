@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1012" height="490" viewBox="0 0 1012 490" font-family="ConsolasFallback,Consolas,'Courier New',monospace" font-size="16px">
+<style>.t{fill:#c9d1d9}.k{fill:#ffa657}.v{fill:#a5d6ff}.d{fill:#616e7f}.h{fill:#79c0ff;font-weight:bold}text,tspan{white-space:pre}</style>
+<rect width="1012" height="490" rx="15" fill="#161b22" stroke="#30363d"/>
+<text x="25" y="99.0" fill="#c9d1d9" class="t">
+<tspan x="25" y="99">        .-----------------------.</tspan>
+<tspan x="25" y="119">        |  $ ./start-server.sh  |</tspan>
+<tspan x="25" y="139">        |  &gt; listening :8080    |</tspan>
+<tspan x="25" y="159">        |  &gt; GET /api   200 OK  |</tspan>
+<tspan x="25" y="179">        |  &gt; POST /api  201     |</tspan>
+<tspan x="25" y="199">        |  _                    |</tspan>
+<tspan x="25" y="219">        &#x27;-----------------------&#x27;</tspan>
+<tspan x="25" y="239">             _|___________|_</tspan>
+<tspan x="25" y="259">    .-------------------------------.</tspan>
+<tspan x="25" y="279">    |  [::::::::::]  [ ]  o o o     |</tspan>
+<tspan x="25" y="299">    |-------------------------------|</tspan>
+<tspan x="25" y="319">    |  [::::::::::]  [ ]  o o o     |</tspan>
+<tspan x="25" y="339">    |-------------------------------|</tspan>
+<tspan x="25" y="359">    |  [::::::::::]  [ ]  o o o     |</tspan>
+<tspan x="25" y="379">    &#x27;-------------------------------&#x27;</tspan>
+<tspan x="25" y="399">       ||                     ||</tspan>
+</text>
+<text x="410" y="40">
+<tspan x="410" y="40"><tspan class="h">sinsun030508</tspan><tspan class="t">@</tspan><tspan class="h">github</tspan></tspan>
+<tspan x="410" y="60"><tspan class="t">----------------------------------------------------------</tspan></tspan>
+<tspan x="410" y="80"><tspan class="t">. </tspan><tspan class="k">OS</tspan><tspan class="t">:</tspan><tspan class="d"> ...................................... </tspan><tspan class="v">Windows, Linux</tspan></tspan>
+<tspan x="410" y="100"><tspan class="t">. </tspan><tspan class="k">Uni</tspan><tspan class="t">:</tspan><tspan class="d"> ............................. </tspan><tspan class="v">Inha Technical College</tspan></tspan>
+<tspan x="410" y="120"><tspan class="t">. </tspan><tspan class="k">Major</tspan><tspan class="t">:</tspan><tspan class="d"> ..................... </tspan><tspan class="v">Computer Systems Engineering</tspan></tspan>
+<tspan x="410" y="140"><tspan class="t">. </tspan><tspan class="k">Role</tspan><tspan class="t">:</tspan><tspan class="d"> ........................ </tspan><tspan class="v">Aspiring Backend Developer</tspan></tspan>
+<tspan x="410" y="160"><tspan class="t">. </tspan><tspan class="k">IDE</tspan><tspan class="t">:</tspan><tspan class="d"> .................... </tspan><tspan class="v">Eclipse, VS Code, IntelliJ IDEA</tspan></tspan>
+<tspan x="410" y="200"><tspan class="t">. </tspan><tspan class="k">Languages.Programming</tspan><tspan class="t">:</tspan><tspan class="d"> ................ </tspan><tspan class="v">Java, Python, JSP</tspan></tspan>
+<tspan x="410" y="220"><tspan class="t">. </tspan><tspan class="k">Languages.Database</tspan><tspan class="t">:</tspan><tspan class="d"> ................................. </tspan><tspan class="v">SQL</tspan></tspan>
+<tspan x="410" y="240"><tspan class="t">. </tspan><tspan class="k">Languages.Real</tspan><tspan class="t">:</tspan><tspan class="d"> ......................... </tspan><tspan class="v">Korean, English</tspan></tspan>
+<tspan x="410" y="280"><tspan class="t">. </tspan><tspan class="k">Interests</tspan><tspan class="t">:</tspan><tspan class="d"> ................... </tspan><tspan class="v">Server, API, Database, OOP</tspan></tspan>
+<tspan x="410" y="320"><tspan class="t">- </tspan><tspan class="h">Projects</tspan><tspan class="t"> -----------------------------------------------</tspan></tspan>
+<tspan x="410" y="340"><tspan class="t">. </tspan><tspan class="k">DnF_Battle</tspan><tspan class="t">:</tspan><tspan class="d"> .................. </tspan><tspan class="v">OOP game system (UML/Java)</tspan></tspan>
+<tspan x="410" y="360"><tspan class="t">. </tspan><tspan class="k">SungJuk</tspan><tspan class="t">:</tspan><tspan class="d"> ......................... </tspan><tspan class="v">Grade management (JSP)</tspan></tspan>
+<tspan x="410" y="380"><tspan class="t">. </tspan><tspan class="k">Subway B/C</tspan><tspan class="t">:</tspan><tspan class="d"> ...................... </tspan><tspan class="v">Cost-benefit simulator</tspan></tspan>
+<tspan x="410" y="420"><tspan class="t">- </tspan><tspan class="h">Contact</tspan><tspan class="t"> ------------------------------------------------</tspan></tspan>
+<tspan x="410" y="440"><tspan class="t">. </tspan><tspan class="k">GitHub</tspan><tspan class="t">:</tspan><tspan class="d"> ......................... </tspan><tspan class="v">github.com/sinsun030508</tspan></tspan>
+<tspan x="410" y="460"><tspan class="t">. </tspan><tspan class="k">Email</tspan><tspan class="t">:</tspan><tspan class="d"> ........................... </tspan><tspan class="v">your.email@example.com</tspan></tspan>
+</text></svg>
